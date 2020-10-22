@@ -43,6 +43,7 @@ function buildPlots(anyVariable) {
     // bar chart - that displays the top 10 OTUs found in the individual
     let top10OTUs = filteredSamples[0]["sample_values"].slice(0,10);
     console.log(top10OTUs);
+    // reverse the order to accomidate plotly plotting orders
     let reverseOrder = top10OTUs.reverse();
     console.log(reverseOrder);
 
@@ -68,11 +69,11 @@ function buildPlots(anyVariable) {
 
     let dataTrace = [trace1];
 
-    // let layout = {
-    //     title: `Top 10 OTUs for ${anyVariable}`
-    //  };
+    let layout = {
+        title: `Top 10 OTUs for ${anyVariable}`
+     };
 
-     Plotly.newPlot('bar', dataTrace);
+     Plotly.newPlot('bar', dataTrace, layout);
 };
 
 
