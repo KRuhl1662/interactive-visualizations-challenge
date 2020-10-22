@@ -8,6 +8,7 @@ d3.json("samples.json").then((sample) => {
     // 
     data['names'].forEach(dropDownMenu => {
         d3.select("#selDataset")
+        // option is the html element
         .append("option")
         .text(dropDownMenu)
         .property("value", dropDownMenu)
@@ -32,18 +33,42 @@ function handleSubmit() {
     //demogInfoBox(selectedId);
 };
 
-// create a function that creates a bar chart that displays the top 10 OTUs found in the individual
+// create a function that creates and updates bar chart and bubble chart based on selected id
 function buildPlots(anyVariable) {
 
+    // filter the data to the sample selected
     let filteredSamples = data.samples.filter(cow => cow.id === anyVariable);
-
     console.log(filteredSamples);
 
+    // bar chart - that displays the top 10 OTUs found in the individual
     let top10OTUs = filteredSamples[0]["sample_values"].slice(0,10);
     console.log(top10OTUs);
     //let reverseOrder = top10OTUs.reverse();
     //console.log(reverseOrder);
+
+    // now we need to get corresponding ids and labels
+    let top10OTUsIds = filteredSamples[0]["otu_ids"].slice(0,10);
+    console.log(top10OTUsIds);
+    let top10OTUsNames = filteredSamples[0]["otu_labels"].slice(0,10);
+    console.log(top10OTUsNames);
+
+    // create the trace
+    let trace1 = {
+        x: top10OTUs,
+        y: top10OTUsIds,
+        text: top10OTUsNames,
+        type: "bar"
+    };
+
+    let dataTrace = [trace1];
+
+    let layout = {
+        title: `Top 10 OTUs for ${anyVariable}`
+     };
+
+     Plotly.newPlot('bar', dataTrace,layout);
 };
+
 
 
 
@@ -54,5 +79,10 @@ function buildPlots(anyVariable) {
 
 
 
+
 // populate the html box with key value pairs from the metadata of the selected ID
 //function demogInfoBox(selectedId)
+
+// x: top10OTUs.map(object => object.sample_values),
+// y: top10OTUs.map(object => object.otu_ids),
+// text: top10OTUs.map(object => object.otu_labels)
