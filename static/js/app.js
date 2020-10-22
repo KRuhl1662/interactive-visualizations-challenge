@@ -67,10 +67,12 @@ function buildPlots(anyVariable) {
         orientation: "h"
     };
 
+    // bar chart plotting time
     let dataTrace = [trace1];
 
     let layout = {
-        title: `Top 10 OTUs for ${anyVariable}`
+        title: `Top 10 OTUs for ${anyVariable}`,
+        xaxis:{title: "number of samples"}
      };
 
      Plotly.newPlot('bar', dataTrace, layout);
