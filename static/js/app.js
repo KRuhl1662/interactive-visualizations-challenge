@@ -43,30 +43,36 @@ function buildPlots(anyVariable) {
     // bar chart - that displays the top 10 OTUs found in the individual
     let top10OTUs = filteredSamples[0]["sample_values"].slice(0,10);
     console.log(top10OTUs);
-    //let reverseOrder = top10OTUs.reverse();
-    //console.log(reverseOrder);
+    let reverseOrder = top10OTUs.reverse();
+    console.log(reverseOrder);
 
     // now we need to get corresponding ids and labels
     let top10OTUsIds = filteredSamples[0]["otu_ids"].slice(0,10);
     console.log(top10OTUsIds);
+    let reverseOrderIds = top10OTUsIds.reverse();
+    console.log(reverseOrderIds);
+
     let top10OTUsNames = filteredSamples[0]["otu_labels"].slice(0,10);
     console.log(top10OTUsNames);
+    let reverseOrderNames = top10OTUsNames.reverse();
+    console.log(reverseOrderNames);
 
     // create the trace
     let trace1 = {
         x: top10OTUs,
-        y: top10OTUsIds,
+        y: top10OTUsIds.map(object => `OTU ${object}`),
         text: top10OTUsNames,
-        type: "bar"
+        type: "bar",
+        orientation: "h"
     };
 
     let dataTrace = [trace1];
 
-    let layout = {
-        title: `Top 10 OTUs for ${anyVariable}`
-     };
+    // let layout = {
+    //     title: `Top 10 OTUs for ${anyVariable}`
+    //  };
 
-     Plotly.newPlot('bar', dataTrace,layout);
+     Plotly.newPlot('bar', dataTrace);
 };
 
 
