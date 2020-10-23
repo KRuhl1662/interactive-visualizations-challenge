@@ -73,9 +73,32 @@ function buildPlots(anyVariable) {
     let layout = {
         title: `Top 10 OTUs for ${anyVariable}`,
         xaxis:{title: "number of samples"}
-     };
+    };
 
-     Plotly.newPlot('bar', dataTrace, layout);
+    Plotly.newPlot('bar', dataTrace, layout);
+
+    // Bubble Chart
+    // sizeref = 2. * max(array of size values) / (desired maximum marker size ** 2)
+    numberOfSamples = filteredSamples[0]["otu_ids"].length
+    console.log(numberOfSamples)
+
+    //SizeRef = 2. * Math.max(filteredSamples[0]["sample_values"]) / (50 ** 2)
+    let trace2 = {
+        x: filteredSamples[0]["otu_ids"],
+        y: filteredSamples[0]["sample_values"],
+        mode: 'markers',
+        marker: {
+            size: filteredSamples[0]["sample_values"],
+            sizeref: 1.25,
+            color: filteredSamples[0]["otu_ids"],
+            colorscale: 'Earth'
+        }
+    };
+
+    let data2 = [trace2];
+
+    Plotly.newPlot('bubble', data2);
+
 };
 
 
