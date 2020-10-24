@@ -30,7 +30,7 @@ function handleSubmit() {
 
     // build your plots
     buildPlots(selectedId);
-    //demogInfoBox(selectedId);
+    demogInfoBox(selectedId);
 };
 
 // create a function that creates and updates bar chart and bubble chart based on selected id
@@ -78,43 +78,39 @@ function buildPlots(anyVariable) {
     Plotly.newPlot('bar', dataTrace, layout);
 
     // Bubble Chart
-    // sizeref = 2. * max(array of size values) / (desired maximum marker size ** 2)
-    numberOfSamples = filteredSamples[0]["otu_ids"].length
-    console.log(numberOfSamples)
 
-    //SizeRef = 2. * Math.max(filteredSamples[0]["sample_values"]) / (50 ** 2)
     let trace2 = {
         x: filteredSamples[0]["otu_ids"],
         y: filteredSamples[0]["sample_values"],
+        text: filteredSamples[0]["otu_labels"],
         mode: 'markers',
         marker: {
             size: filteredSamples[0]["sample_values"],
-            sizeref: 1.25,
+            sizeref: 1.15,
             color: filteredSamples[0]["otu_ids"],
             colorscale: 'Earth'
         }
     };
 
-    let data2 = [trace2];
+    let dataTrace2 = [trace2];
 
-    Plotly.newPlot('bubble', data2);
+    let layout2 = {
+        title: `OTU Samples for ${anyVariable}`,
+        xaxis:{title: "number of samples"}
+    };
+
+    Plotly.newPlot('bubble', dataTrace2, layout2);
 
 };
-
-
-
-
-
-
-// create a function that displays each sample
-//function buildBubblePlot(selectedId)
-
-
 
 
 // populate the html box with key value pairs from the metadata of the selected ID
 //function demogInfoBox(selectedId)
 
-// x: top10OTUs.map(object => object.sample_values),
-// y: top10OTUs.map(object => object.otu_ids),
-// text: top10OTUs.map(object => object.otu_labels)
+function demogInfoBox(selectedID) {
+    // have to use the == because the sample name is a string and the metadata id is a integer
+    // used variables like cow, chicken, anyVariable, anotherVariable to remind myself these can be anything and are not specific words that have to be used. Would use more professional variables in a work setting... please don't dock points
+    let filteredMetadata = data.metadata.filter(chicken => chicken.id == selectedID);
+    //console.log(data.metadata);
+    console.log(filteredMetadata);
+};
