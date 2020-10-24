@@ -88,7 +88,7 @@ function buildPlots(anyVariable) {
             size: filteredSamples[0]["sample_values"],
             sizeref: 1.15,
             color: filteredSamples[0]["otu_ids"],
-            colorscale: 'Earth'
+            colorscale: 'Electric'
         }
     };
 
@@ -113,4 +113,20 @@ function demogInfoBox(selectedID) {
     let filteredMetadata = data.metadata.filter(chicken => chicken.id == selectedID);
     //console.log(data.metadata);
     console.log(filteredMetadata);
+
+    //clear out old data
+    d3.select("#sample-metadata").html("");
+
+    //append key value pairs from the selected array to sample-metadata
+    Object.entries
+
+    filteredMetadata.forEach((info) => {
+        console.log(info);
+
+        Object.entries(info).forEach(([key, value]) =>{
+            d3.select("#sample-metadata")
+                .append("div")
+                .text(`${key.toUpperCase()}: ${value}`);
+        });
+    });
 };
